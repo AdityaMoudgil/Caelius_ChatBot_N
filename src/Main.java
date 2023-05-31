@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -95,6 +96,13 @@ public class Main extends JFrame implements ActionListener {
         String answer = getAnswerFromDatabase(message);
         if (!answer.isEmpty()) {
             bot(answer);
+        } else if (isMathematicalExpression(message)) {
+            try {
+                double result = evaluateMathExpression(message);
+                bot("The result is: " + result);
+            } catch (Exception exception) {
+                bot("Invalid mathematical expression.");
+            }
         } else {
             searchOnGoogle(message);
         }
@@ -132,6 +140,51 @@ public class Main extends JFrame implements ActionListener {
 
     public static void bot(String message) {
         area.append("Bot : " + message + "\n");
+    }
+
+    public static boolean isMathematicalExpression(String message) {
+        // Check if the message contains only numbers, mathematical operators (+, -, *, /), and spaces
+        return message.matches("[0-9+\\-*/\\s]+");
+    }
+
+    public static double evaluateMathExpression(String expression) {
+        String[] tokens = expression.split("\\s");
+        Stack<Double> numbers = new Stack<>();
+        Stack<String> operators = new Stack<>();
+
+        for (String token : tokens) {
+            if (token.matches("[+-/*]")) {
+                operators.push(token);
+            } else {
+                double number = Double.parseDouble(token);
+                numbers.push(number);
+            }
+
+            while (numbers.size() >= 2 && operators.size() >= 1) {
+                double operand2 = numbers.pop();
+                double operand1 = numbers.pop();
+                String operator = operators.pop();
+                double result = performOperation(operand1, operator, operand2);
+                numbers.push(result);
+            }
+        }
+
+        return numbers.pop();
+    }
+
+    public static double performOperation(double operand1, String operator, double operand2) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                return operand1 / operand2;
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + operator);
+        }
     }
 
     public static void main(String[] args) {
