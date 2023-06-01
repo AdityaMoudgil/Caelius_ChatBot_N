@@ -1,25 +1,25 @@
--- CREATE DATABASE chatbot_db;
--- USE chatbot_db;
--- Create the table for questions and answers
--- CREATE TABLE qa (
---   id INT AUTO_INCREMENT PRIMARY KEY,
---   question VARCHAR(255) NOT NULL,
---   answer VARCHAR(255) NOT NULL
--- );
--- desc qa
+CREATE DATABASE chatbot_db;
+USE chatbot_db;
+Create the table for questions and answers
+CREATE TABLE qa (
+id INT AUTO_INCREMENT PRIMARY KEY,
+question VARCHAR(255) NOT NULL,
+answer VARCHAR(255) NOT NULL
+);
+desc qa
 
--- INSERT INTO qa (question, answer) VALUES
---   ('What is your name?', 'My name is ChatBot.'),
---   ('How are you?', 'I am fine, thank you.'),
---   ('What is the weather like today?', 'I am sorry, I do not have access to real-time weather information.'),
---   ('Can you help me with programming?', 'Of course! I can assist you with programming questions.'),
---   ('What is the capital of France?', 'The capital of France is Paris.');
+INSERT INTO qa (question, answer) VALUES
+('What is your name?', 'My name is ChatBot.'),
+('How are you?', 'I am fine, thank you.'),
+('What is the weather like today?', 'I am sorry, I do not have access to real-time weather information.'),
+('Can you help me with programming?', 'Of course! I can assist you with programming questions.'),
+('What is the capital of France?', 'The capital of France is Paris.');
 INSERT INTO qa (question, answer) VALUES
 	('Are you a robot?', 'Yes I am a robot, but I am a good one. Let me prove it. How can I help you?'),
-    ('How do you function?', 'I am a Java-based chat bot that can answer questions based on a predefined set of questions and answers stored in a MySQL database. If a question is not available in the database, it can perform a Google search and display the results.'),
-    ('How does a chatbot work?', 'A chatbot uses algorithms and natural language processing techniques to understand and respond to user input.'),
+    	('How do you function?', 'I am a Java-based chat bot that can answer questions based on a predefined set of questions and answers stored in a MySQL database. If a question is not available in the database, it can perform a Google search and display the results.'),
+    	('How does a chatbot work?', 'A chatbot uses algorithms and natural language processing techniques to understand and respond to user input.'),
 	('Are you human?', 'No, I am an artificial intelligence language model.'),
-		('What is the weather like today?', 'I am sorry, I do not have access to real-time data. You can check a weather website or app for the latest information.'),
+	('What is the weather like today?', 'I am sorry, I do not have access to real-time data. You can check a weather website or app for the latest information.'),
 	('What is the capital of France?', 'The capital of France is Paris.'),
 	('Who is the current President of the United States?', 'I am not aware of the current date as my training data only goes up until September 2021. Please check for the latest information.'),
 	('How tall is Mount Everest?', 'Mount Everest is approximately 8,848 meters (29,029 feet) tall.'),
