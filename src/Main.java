@@ -108,7 +108,7 @@ public class Main extends JFrame implements ActionListener {
         }
     }
 
-    public String getAnswerFromDatabase(String question) {
+    public String getAnswerFromDatabase(String question){
         String url = "jdbc:mysql://localhost:3306/chatbot_db";
         String username = "root";
         String password = "";
@@ -124,7 +124,6 @@ public class Main extends JFrame implements ActionListener {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "";
     }
 

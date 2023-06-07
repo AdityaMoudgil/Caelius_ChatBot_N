@@ -21,7 +21,7 @@ INSERT INTO qa (question, answer) VALUES
 	('Are you human?', 'No, I am an artificial intelligence language model.'),
 		('What is the weather like today?', 'I am sorry, I do not have access to real-time data. You can check a weather website or app for the latest information.'),
 	('What is the capital of France?', 'The capital of France is Paris.'),
-	('Who is the current President of the United States?', 'I am not aware of the current date as my training data only goes up until September 2021. Please check for the latest information.'),
+	('Who is the current President of the United States?', 'Joe Biden'),
 	('How tall is Mount Everest?', 'Mount Everest is approximately 8,848 meters (29,029 feet) tall.'),
 	('What is the meaning of life?', 'The meaning of life can vary for different individuals and philosophical beliefs. It is  a question that has been pondered by many throughout history.'),
 	('Tell me a joke.', 'Why do not scientists trust atoms? Because they make up everything!'),
