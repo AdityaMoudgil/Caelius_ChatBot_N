@@ -147,30 +147,32 @@ public class Main extends JFrame implements ActionListener {
         return message.matches("[0-9+\\-*/\\s]+");
     }
 
-    public static double evaluateMathExpression(String expression) {
-        String[] tokens = expression.split("\\s");
-        Stack<Double> numbers = new Stack<>();
-        Stack<String> operators = new Stack<>();
+public static double evaluateMathExpression(String expression) {
+    String[] tokens = expression.split("\\s");
+    Stack<Double> numbers = new Stack<>();
+    Stack<String> operators = new Stack<>();
 
-        for (String token : tokens) {
-            if (token.matches("[+-/*]")) {
-                operators.push(token);
-            } else {
-                double number = Double.parseDouble(token);
-                numbers.push(number);
-            }
-
-            while (numbers.size() >= 2 && operators.size() >= 1) {
-                double operand2 = numbers.pop();
-                double operand1 = numbers.pop();
-                String operator = operators.pop();
-                double result = performOperation(operand1, operator, operand2);
-                numbers.push(result);
-            }
+    for (int i = 0; i < tokens.length; i++) {
+        String token = tokens[i];
+        if (token.matches("[+-/*]")) {
+            operators.push(token);
+        } else {
+            double number = Double.parseDouble(token);
+            numbers.push(number);
         }
 
-        return numbers.pop();
+        while (numbers.size() >= 2 && operators.size() >= 1) {
+            double operand2 = numbers.pop();
+            double operand1 = numbers.pop();
+            String operator = operators.pop();
+            double result = performOperation(operand1, operator, operand2);
+            numbers.push(result);
+        }
     }
+
+    return numbers.pop();
+}
+
 
     public static double performOperation(double operand1, String operator, double operand2) {
         switch (operator) {
