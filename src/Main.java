@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -183,9 +182,8 @@ public class Main extends JFrame implements ActionListener {
                 return operand1 * operand2;
             case "/":
                 return operand1 / operand2;
-            default:
-                throw new IllegalArgumentException("Invalid operator: " + operator);
         }
+        return operand1;
     }
 
     public static void main(String[] args) {
