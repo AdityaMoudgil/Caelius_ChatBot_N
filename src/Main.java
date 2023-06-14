@@ -8,11 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -26,9 +23,6 @@ public class Main extends JFrame implements ActionListener {
     JTextField field = new JTextField();
     JScrollPane sp;
     JButton send;
-    LocalTime time = LocalTime.now();
-    LocalDate date = LocalDate.now();
-    Random random = new Random();
     List<String> questions = new ArrayList<>();
 
     public Main(String title) {
