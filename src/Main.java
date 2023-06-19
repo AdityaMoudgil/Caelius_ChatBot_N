@@ -83,7 +83,6 @@ public class Main extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String message = field.getText().toLowerCase();
-
         area.append("You : " + field.getText() + "\n");
         field.setText("");
 
@@ -98,7 +97,21 @@ public class Main extends JFrame implements ActionListener {
                 bot("Invalid mathematical expression.");
             }
         } else {
-            searchOnGoogle(message);
+            // Check if the message starts with "add:" to indicate a custom question and answer
+            if (message.startsWith("add:")) {
+                String customInput = message.substring(4).trim();
+                String[] parts = customInput.split(":");
+                if (parts.length == 2) {
+                    String customQuestion = parts[0].trim();
+                    String customAnswer = parts[1].trim();
+                    addCustomQuestionAnswer(customQuestion, customAnswer);
+                    bot("Custom question and answer added successfully!");
+                } else {
+                    bot("Invalid custom question and answer format. Please use 'question:answer' format.");
+                }
+            } else {
+                searchOnGoogle(message);
+            }
         }
     }
 
@@ -122,6 +135,25 @@ public class Main extends JFrame implements ActionListener {
         return "";
     }
 
+    public void addCustomQuestionAnswer(String question, String answer) {
+        String url = "jdbc:mysql://localhost:3306/chatbot_db";
+        String username = "root";
+        String password = "";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement()) {
+
+            String sql = "INSERT INTO qa (question, answer) VALUES ('" + question + "', '" + answer + "')";
+            statement.executeUpdate(sql);
+
+            // Update the questions list to include the new custom question
+            questions.add(question);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void searchOnGoogle(String query) {
         try {
             URL url = new URL("https://google.com/search?q=" + query.replace(" ", "+"));
@@ -141,32 +173,31 @@ public class Main extends JFrame implements ActionListener {
         return message.matches("[0-9+\\-*/\\s]+");
     }
 
-public static double evaluateMathExpression(String expression) {
-    String[] tokens = expression.split("\\s");
-    Stack<Double> numbers = new Stack<>();
-    Stack<String> operators = new Stack<>();
+    public static double evaluateMathExpression(String expression) {
+        String[] tokens = expression.split("\\s");
+        Stack<Double> numbers = new Stack<>();
+        Stack<String> operators = new Stack<>();
 
-    for (int i = 0; i < tokens.length; i++) {
-        String token = tokens[i];
-        if (token.matches("[+-/*]")) {
-            operators.push(token);
-        } else {
-            double number = Double.parseDouble(token);
-            numbers.push(number);
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (token.matches("[+-/*]")) {
+                operators.push(token);
+            } else {
+                double number = Double.parseDouble(token);
+                numbers.push(number);
+            }
+
+            while (numbers.size() >= 2 && operators.size() >= 1) {
+                double operand2 = numbers.pop();
+                double operand1 = numbers.pop();
+                String operator = operators.pop();
+                double result = performOperation(operand1, operator, operand2);
+                numbers.push(result);
+            }
         }
 
-        while (numbers.size() >= 2 && operators.size() >= 1) {
-            double operand2 = numbers.pop();
-            double operand1 = numbers.pop();
-            String operator = operators.pop();
-            double result = performOperation(operand1, operator, operand2);
-            numbers.push(result);
-        }
+        return numbers.pop();
     }
-
-    return numbers.pop();
-}
-
 
     public static double performOperation(double operand1, String operator, double operand2) {
         switch (operator) {
