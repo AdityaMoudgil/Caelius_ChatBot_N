@@ -69,7 +69,7 @@ public class Main extends JFrame implements ActionListener {
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT question, answer FROM qa")) {
+             ResultSet resultSet = statement.executeQuery("SELECT question FROM qa")) {
 
             while (resultSet.next()) {
                 String question = resultSet.getString("question");
